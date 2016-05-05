@@ -1,0 +1,26 @@
+{
+  "name": "pincafe",
+  "version": "1.0.0",
+  "description": "web client code for pincafe project",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heronyang/pincafe.git"
+  },
+  "keywords": [
+    "pincafe"
+  ],
+  "author": "Heron Yang",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/heronyang/pincafe/issues"
+  },
+  "homepage": "https://github.com/heronyang/pincafe#readme",
+  "dependencies": {
+    "ejs": "^2.4.1",
+    "express": "^4.13.4"
+  }
+}

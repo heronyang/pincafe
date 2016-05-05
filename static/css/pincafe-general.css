@@ -1,0 +1,119 @@
+body {
+  overflow-x: hidden;
+}
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* navbar */
+.navbar {
+    margin-bottom: 0px;
+    background: #EFA127;
+    padding-left: 135px;
+    padding-right: 135px;
+}
+
+.navbar a {
+    color: white;
+}
+
+.navbar input, .navbar button {
+
+    border-radius: 0px;
+
+    background: rgba(0, 0, 0, 0);
+    border: 0px;
+    color: white;
+    font-size: 18px;
+}
+
+.navbar button:hover {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.navbar input {
+    border-top: transparent;
+    border-left: 1px white solid;
+    border-right: transparent;
+    border-bottom: transparent;
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar input:focus {
+    outline: none;
+    box-shadow: none;
+    border-left: 1px white solid;
+}
+
+.navbar input:focus, .navbar input:active {
+    outline: 0 !important;
+    border-left: 1px white solid;
+}
+
+.navbar img {
+    margin-top: 4px;
+}
+
+.navbar form {
+    width: calc(100% - 200px);
+}
+
+.navbar input::selection {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.navbar input::selection::-moz-selection {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.navbar input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #EFA127 inset;
+  -webkit-text-fill-color: white !important;
+  color: #EFA127 !important;
+}
+
+
+.navbar .input-group {
+    display: table;
+    width: 100%;
+}
+
+.navbar .navbar-form .input-group .input-group-btn {
+    width: 30px;
+}
+
+.navbar input::-webkit-input-placeholder{
+    color: #FCCA86;
+}
+
+.navbar input:-moz-placeholder {
+    color: #FCCA86;
+}
+
+.btn.btn-primary {
+    background-color: #EFA127;
+}
+.btn {
+    border: none;
+}
+
+/* map */
+a[href^="http://maps.google.com/maps"]{display:none !important}
+a[href^="https://maps.google.com/maps"]{display:none !important}
+
+.gmnoprint a, .gmnoprint span, .gm-style-cc {
+    display:none;
+}
+.gmnoprint div {
+    background:none !important;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
