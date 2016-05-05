@@ -6,18 +6,22 @@ app.use(express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-    res.render('pages/index');
+  res.render('pages/index');
 });
 
 app.get('/s/:keyword', function(req, res) {
-    res.render('pages/search', {keyword: req.params.keyword});
+  res.render('pages/search', {keyword: req.params.keyword});
 });
 
 app.get('/p/:cafeId', function(req, res) {
-    res.render('pages/profile', {cafeId: req.params.cafeId});
+  res.render('pages/profile', {cafeId: req.params.cafeId});
+});
+
+app.get('*', function(req, res){
+  res.send('page not found', 404);
 });
 
 var port = process.env.PORT || 8000;
 app.listen(port, function(){
-    console.log('pincafe is running on port ' + port);
+  console.log('pincafe is running on port ' + port);
 });
