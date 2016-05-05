@@ -9,12 +9,12 @@ app.get('/', function (req, res) {
     res.render('pages/index');
 });
 
-app.get('/s', function(req, res) {
-    res.render('pages/search');
+app.get('/s/:keyword', function(req, res) {
+    res.render('pages/search', {keyword: req.params.keyword});
 });
 
-app.get('/p', function(req, res) {
-    res.render('pages/profile');
+app.get('/p/:cafeId', function(req, res) {
+    res.render('pages/profile', {cafeId: req.params.cafeId});
 });
 
 var port = process.env.PORT || 8000;

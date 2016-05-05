@@ -1,37 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>PinCafe</title>
     <% include ../partials/head %>
+    <link href="/css/pincafe-profile.css" rel="stylesheet"/>
   </head>
-  <body class="container">
+  <body>
 
     <header>
       <% include ../partials/header %>
     </header>
 
     <main>
-      <div class="row">
-        <div class="col-sm-8">
 
-          <div class="jumbotron">
-            <h1>This is great</h1>
-            <p>Welcome to templating using EJS</p>
+      <div class="row carousel-holder">
+        <div class="col-md-04">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
+            <ol class="carousel-indicators">
+              <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+              <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+            </ol>
+
+            <div class="carousel-inner">
+              <div class="item active">
+                <img class="slide-image" src="/img/slider.jpg" alt=""/>
+              </div>
+              <div class="item">
+                <img class="slide-image" src="/img/slider.jpg" alt=""/>
+              </div>
+              <div class="item">
+                <img class="slide-image" src="/img/slider.jpg" alt=""/>
+              </div>
+            </div>
+
+            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+
+            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 col-sm-12">
+            <div class="clearfix"></div>
+            <h1 class="section-heading">窩著咖啡</h1>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="rating-container">
+                  <h4>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <span class="space"></span>
+                    <span>(143)</span>
+                    <span class="space"></span>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rating-modal">給星星</button>
+                  </h4>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="foodtype-container">
+                  <i class="fa fa-cutlery"></i>
+                  <span class="space"></span>
+                  <span class="foodtype-tag">早餐</span>
+                  <span class="foodtype-tag">午餐</span>
+                  <span class="foodtype-tag">咖啡</span>
+                  <span class="foodtype-tag">輕食</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="tag-container">
+                <ul class="pager">
+                  <li><a href="#">#安靜</a></li>
+                  <li><a href="#">#明亮</a></li>
+                  <li><a href="#">#早午靜</a></li>
+                  <li><a href="#">#明亮</a></li>
+                  <li><a href="#">#適合讀書靜</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="photo-container">
+
+              <a href="/img/img_1.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/img_1.jpg" /></a>
+
+              <a href="/img/img_2.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/img_2.jpg" /></a>
+
+              <a href="/img/img_3.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/img_3.jpg" /></a>
+
+              <a href="/img/img_4.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/img_4.jpg" /></a>
+
+              <a href="/img/img_1.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/img_1.jpg" /></a>
+
+              <a href="/img/menu.jpg" data-toggle="lightbox"><img class="img-responsive" src="/img/menu.jpg" /></a>
+
+            </div>
+
+            <hr />
+
+            <div class="row">
+              <div class="col-md-12">
+                <h3>描述</h3>
+                <blockquote>就在捷運東門站、永康街附近的 小食糖 Sugar Bistro ，那種小品咖啡店的感覺，很適合午後在這閱讀或來杯咖啡。</blockquote>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <h3>部落客</h3>
+                <div class="post">
+                  <blockquote>
+                    <h4><a href="#">大安站「窩著咖啡」perch cafe 充滿文青味</a></h4>
+                    <p><b class="author">Angelababy (ayumi0218): </b>Perch Cafe窩著咖啡檢視較大的地圖店址：台北市大安區信義路四段30巷20號電話：02-27027635營業時間：14:00-23:00公休日：星期二巷弄內的...</p>
+                  </blockquote>
+                </div>
+                <div class="post">
+                  <blockquote>
+                    <h4><a href="#">《吃吃喝喝》台北大安【Perch Cafe】窩著咖啡</a></h4>
+                    <p><b class="author">nerdkid (nerdkid): </b>這天未事先查詢《窩著》的營業時間，一點半左右便來到店門口，看著拉上的鐵門一度以為是公休；後來才知道，有別於一般早上就開門的咖啡店，《窩...</p>
+                  </blockquote>
+                </div>
+                <div class="post">
+                  <blockquote>
+                    <h4><a href="#">大安站「窩著咖啡」perch cafe 充滿文青味</a></h4>
+                    <p><b class="author">Angelababy (ayumi0218): </b>Perch Cafe窩著咖啡檢視較大的地圖店址：台北市大安區信義路四段30巷20號電話：02-27027635營業時間：14:00-23:00公休日：星期二巷弄內的...</p>
+                  </blockquote>
+                </div>
+                <div class="post">
+                  <blockquote>
+                    <h4><a href="#">《吃吃喝喝》台北大安【Perch Cafe】窩著咖啡</a></h4>
+                    <p><b class="author">nerdkid (nerdkid): </b>這天未事先查詢《窩著》的營業時間，一點半左右便來到店門口，看著拉上的鐵門一度以為是公休；後來才知道，有別於一般早上就開門的咖啡店，《窩...</p>
+                  </blockquote>
+                </div>
+                <div class="post">
+                  <blockquote>
+                    <h4><a href="#">大安站「窩著咖啡」perch cafe 充滿文青味</a></h4>
+                    <p><b class="author">Angelababy (ayumi0218): </b>Perch Cafe窩著咖啡檢視較大的地圖店址：台北市大安區信義路四段30巷20號電話：02-27027635營業時間：14:00-23:00公休日：星期二巷弄內的...</p>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-        </div>
-        <div class="col-sm-4">
+          <div class="right-detail-container col-md-4 col-sm-12">
+            <div class="utility">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-2 col-md-offset-1">
+                    <img src="/img/item_wifi.png"/>
+                    <p>Wifi</p>
+                  </div>
+                  <div class="col-md-2">
+                    <img src="/img/item_power.png"/>
+                    <p>插座</p>
+                  </div>
+                  <div class="col-md-2">
+                    <img src="/img/item_time.png"/>
+                    <p>限時</p>
+                  </div>
+                  <div class="col-md-2">
+                    <img src="/img/item_quite.png"/>
+                    <p>輕聲細語</p>
+                  </div>
+                  <div class="col-md-2">
+                    <img src="/img/item_booking.png"/>
+                    <p>訂位</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <div class="well">
-            <h3>Look I'm A Sidebar!</h3>
+            <div class="contact">
+
+              <div class="container-fluid">
+
+                <div class="row phone-container">
+                  <div class="col-md-3">
+                    <i class="fa fa-phone"></i>
+                  </div>
+                  <div class="col-md-9">
+                    <p>電話：(02)1234-5424</p>
+                  </div>
+                </div>
+
+                <div class="row address-container">
+                  <div class="col-md-3">
+                    <i class="fa fa-map-marker"></i>
+                  </div>
+                  <div class="col-md-9">
+                    <p>地址：台北市大安區麗水街209號</p>
+                  </div>
+                </div>
+
+                <div class="row openhour-container">
+                  <div class="col-md-3">
+                    <i class="fa fa-clock-o"></i>
+                  </div>
+                  <div class="col-md-9">
+                    <p>營業時間：09:30~22:30</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            <div id="map" class="map">map</div>
+
+            <div class="container-fluid">
+              <div class="share-button-container row">
+
+                <div class="col-md-4">
+                  <span class="fa-stack fa-lg facebook">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                  </span>
+                </div>
+
+                <div class="col-md-4">
+                  <span class="fa-stack fa-lg google-plus">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-google-plus fa-stack-1x fa-inverse"></i>
+                  </span>
+                </div>
+
+                <div class="col-md-4">
+                  <span class="fa-stack fa-lg email">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-envelope-o fa-stack-1x fa-inverse"></i>
+                  </span>
+                </div>
+
+              </div>
+            </div>
           </div>
 
+          <div class="fb-comments" data-href="https://www.google.com/" data-width="100%" data-numposts="5"></div>
+
         </div>
+
+        <div class="modal fade" id="rating-modal" tabindex="-1" role="dialog" aria-labelledby="rating-modal-label">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="rating-modal-label">給商家評分</h4>
+              </div>
+              <div class="modal-body">
+                <div class="rating">
+                  <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
 
     <footer>
       <% include ../partials/footer %>
     </footer>
+
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=235876559768929";
+        fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <script type="text/javascript" src="/js/jquery-2.2.3.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/ekko-lightbox.min.js"></script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o" async defer></script>
+    <script type="text/javascript">stLight.options({publisher: "054ee5ad-db34-43f3-a466-7b11b2132652", doNotHash: false, doNotCopy: false, hashAddressBar: false});</script>
+    <script type="text/javascript" src="/js/profile.js"></script>
+    <script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
 
   </body>
 </html>
