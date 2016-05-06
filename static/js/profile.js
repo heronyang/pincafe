@@ -78,6 +78,7 @@ function insertCafeDataToLayout(cafe) {
   insertRating(cafe);
   insertFoodType(cafe);
   insertTags(cafe);
+  insertDescription(cafe);
 
 }
 
@@ -210,6 +211,14 @@ function insertTags(cafe) {
         console.log('Error: ' + error.code + ' ' + error.message);
       }
   });
+
+}
+
+function insertDescription(cafe) {
+
+  var descriptionText = cafe.get('description');
+  var description = $('#pincafe-description');
+  description.text(descriptionText);
 
 }
 
