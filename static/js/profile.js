@@ -72,6 +72,8 @@ function insertCafeDataToLayout(cafe) {
 
   var name = $('#pincafe-name');
   var alternativeName = $('#pincafe-alternative-name');
+  var phone=  $('#pincafe-phone');
+  var address = $('#pincafe-address');
 
   var nameText = cafe.get("name");
   name.text(nameText);
@@ -82,7 +84,41 @@ function insertCafeDataToLayout(cafe) {
     alternativeName.show();
   }
 
+  var phoneText = cafe.get("phone");
+  phone.text(phoneText);
+
+  var addressText = cafe.get("address");
+  address.text(addressText);
+
+  var openingHoursTypesRelation = cafe.relation("openingHoursTypes");
+  fillOpeningHoursSummary(openingHoursTypesRelation);
+
 }
+
+function fillOpeningHoursSummary(openingHoursTypesRelation) {
+
+  var openingHours = $('#pincafe-opening-hours');
+  var openingHoursTypesQuery = openingHoursTypesRelation.query();
+
+  openingHoursTypesQuery.find({
+      success: function(results) {
+        var openingHoursText = "";
+        for(var i = 0; i < results.length; i ++) {
+          var result = results[i];
+          if(i > 0) {
+            openingHoursText += '、';
+          }
+          openingHoursText += result.get("description");
+        }
+        openingHours.text(openingHoursText);
+      },
+      error : function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
+  });
+
+}
+
 
 setupParse();
 setupLightBox();
