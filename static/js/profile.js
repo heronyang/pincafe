@@ -77,6 +77,7 @@ function insertCafeDataToLayout(cafe) {
   insertOpeningHours(cafe);
   insertRating(cafe);
   insertFoodType(cafe);
+  insertTags(cafe);
 
 }
 
@@ -182,6 +183,28 @@ function insertFoodType(cafe) {
           foodTypesHtml += '<span class="foodtype-tag">' + f.get('name') + '</span>';
         }
         foodTypes.html(foodTypesHtml);
+      },
+      error: function(error) {
+        console.log('Error: ' + error.code + ' ' + error.message);
+      }
+  });
+
+}
+
+function insertTags(cafe) {
+
+  var tagsRelation = cafe.relation('tags');
+  var tagsQuery = tagsRelation.query();
+
+  tagsQuery.find({
+      success: function(results) {
+        var tags = $('#pincafe-tags');
+        var tagsHtml = '';
+        for(var i = 0; i < results.length; i ++) {
+          var t = results[i];
+          tagsHtml += '<li><a href="#">#' + t.get('name') + '</a></li>';
+        }
+        tags.html(tagsHtml);
       },
       error: function(error) {
         console.log('Error: ' + error.code + ' ' + error.message);
