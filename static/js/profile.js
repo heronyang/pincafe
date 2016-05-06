@@ -74,6 +74,7 @@ function pincafeProfileInit(cafeId) {
 
 function insertCafeDataToLayout(cafe) {
 
+  insertImages(cafe);
   insertName(cafe);
   insertAlternativeName(cafe);
   insertPhone(cafe);
@@ -87,6 +88,38 @@ function insertCafeDataToLayout(cafe) {
 
   setupMap(cafe);
 
+}
+
+function insertImages(cafe) {
+
+  var Image = Parse.Object.extend('Image');
+  var query = new Parse.Query(Image);
+
+  query.equalTo('cafe', cafe);
+  query.find({
+      success: function(images) {
+        insertImagesHandler(images);
+      },
+      error: function(object, error) {
+        console.log('fail');
+      }
+  });
+
+}
+
+function insertImagesHandler(images) {
+  var imageContainer = $('#pincafe-image-container');
+  var imageContainerHtml = '';
+  for(var i = 0; i < images.length; i ++) {
+    var image = images[i];
+    var url = image.get('url');
+    if(image.get('isLarge')) {
+      $('#pincafe-large-image').attr("src", image.get('url'));
+    }
+    imageContainerHtml += 
+      '<a href="' + url + '" data-toggle="lightbox"><img class="img-responsive" src="' + url + '" /></a>';
+  }
+  imageContainer.html(imageContainerHtml);
 }
 
 function insertName(cafe) {
@@ -249,13 +282,6 @@ function setupMap(cafe) {
   lat = parseFloat(cafe.get('latitude'));
   lng = parseFloat(cafe.get('longitude'));
   $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
-}
-
-function setupShareButtons() {
-  var fbShare = $('#share-facebook');
-  fbShare.click(function() {
-    console.log( "Handler for .click() called." );
-  });
 }
 
 setupParse();

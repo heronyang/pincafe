@@ -19,7 +19,7 @@ app.get('/p/:cafeId', function(req, res) {
 });
 
 app.get('*', function(req, res){
-  res.send('page not found', 404);
+    res.status(404).send('page not found');
 });
 
 var port = process.env.PORT || 8000;
