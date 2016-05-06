@@ -50,19 +50,19 @@ function setupParse() {
 
 function pincafeProfileInit(cafeId) {
 
-  var Cafe = Parse.Object.extend("Cafe");
+  var Cafe = Parse.Object.extend('Cafe');
   var query = new Parse.Query(Cafe);
-  query.equalTo("cafeId", cafeId);
+  query.equalTo('cafeId', cafeId);
   query.find({
       success: function(cafes) {
-        console.log("success", cafes.length);
+        console.log('success', cafes.length);
         for(var i = 0; i < cafes.length; i ++) {
           var cafe = cafes[i];
           insertCafeDataToLayout(cafe);
         }
       },
       error: function(object, error) {
-        console.log("fail");
+        console.log('fail');
       }
   });
 
@@ -76,13 +76,14 @@ function insertCafeDataToLayout(cafe) {
   insertAddress(cafe);
   insertOpeningHours(cafe);
   insertRating(cafe);
+  insertFoodType(cafe);
 
 }
 
 function insertName(cafe) {
 
   var name = $('#pincafe-name');
-  var nameText = cafe.get("name");
+  var nameText = cafe.get('name');
   name.text(nameText);
 
 }
@@ -91,7 +92,7 @@ function insertAlternativeName(cafe) {
 
   var alternativeName = $('#pincafe-alternative-name');
 
-  var alternativeNameText = cafe.get("alternativeName");
+  var alternativeNameText = cafe.get('alternativeName');
   if(alternativeNameText !== '') {
     alternativeName.text('(' + alternativeNameText + ')');
     alternativeName.show();
@@ -103,7 +104,7 @@ function insertPhone(cafe) {
 
   var phone=  $('#pincafe-phone');
 
-  var phoneText = cafe.get("phone");
+  var phoneText = cafe.get('phone');
   phone.text(phoneText);
 
 }
@@ -112,32 +113,32 @@ function insertAddress(cafe) {
 
   var address = $('#pincafe-address');
 
-  var addressText = cafe.get("address");
+  var addressText = cafe.get('address');
   address.text(addressText);
 
 }
 
 function insertOpeningHours(cafe) {
 
-  var openingHoursTypesRelation = cafe.relation("openingHoursTypes");
+  var openingHoursTypesRelation = cafe.relation('openingHoursTypes');
 
   var openingHours = $('#pincafe-opening-hours');
   var openingHoursTypesQuery = openingHoursTypesRelation.query();
 
   openingHoursTypesQuery.find({
       success: function(results) {
-        var openingHoursText = "";
+        var openingHoursText = '';
         for(var i = 0; i < results.length; i ++) {
           var result = results[i];
           if(i > 0) {
             openingHoursText += '、';
           }
-          openingHoursText += result.get("description");
+          openingHoursText += result.get('description');
         }
         openingHours.text(openingHoursText);
       },
-      error : function(error) {
-        alert("Error: " + error.code + " " + error.message);
+      error: function(error) {
+        console.log('Error: ' + error.code + ' ' + error.message);
       }
   });
 
@@ -145,8 +146,8 @@ function insertOpeningHours(cafe) {
 
 function insertRating(cafe) {
 
-  var ratingAverageValue = cafe.get("ratingAverage");
-  var ratingCountValue = cafe.get("ratingCount");
+  var ratingAverageValue = cafe.get('ratingAverage');
+  var ratingCountValue = cafe.get('ratingCount');
 
   var ratingCount = $('#pincafe-rating-count');
   ratingCount.text(ratingCountValue);
@@ -164,6 +165,28 @@ function insertRating(cafe) {
     ratingStarsHtml += '<i class="fa fa-star-o"></i>';
   }
   ratingStars.html(ratingStarsHtml);
+
+}
+
+function insertFoodType(cafe) {
+
+  var foodTypesRelation = cafe.relation('foodTypes');
+  var foodTypesQuery = foodTypesRelation.query();
+
+  foodTypesQuery.find({
+      success: function(results) {
+        var foodTypes = $('#pincafe-foodtypes');
+        var foodTypesHtml = '';
+        for(var i = 0; i < results.length; i ++) {
+          var f = results[i];
+          foodTypesHtml += '<span class="foodtype-tag">' + f.get('name') + '</span>';
+        }
+        foodTypes.html(foodTypesHtml);
+      },
+      error: function(error) {
+        console.log('Error: ' + error.code + ' ' + error.message);
+      }
+  });
 
 }
 
