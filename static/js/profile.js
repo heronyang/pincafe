@@ -1,6 +1,8 @@
 var lat = 0;
 var lng = 0;
 
+var CurrentPageCafe = null;
+
 function initMap() {
 
   var mapDiv = document.getElementById('map');
@@ -73,6 +75,8 @@ function pincafeProfileInit(cafeId) {
 }
 
 function insertCafeDataToLayout(cafe) {
+
+  CurrentPageCafe = cafe;
 
   insertImages(cafe);
   insertName(cafe);
@@ -284,5 +288,39 @@ function setupMap(cafe) {
   $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
 }
 
+function setupRatingHandler() {
+  $(document).on('click', '.pincafe-rating', function() {
+    var value = $(this).data('value');
+    submitRating(value);
+  });
+}
+
+function submitRating(value) {
+  $('#rating-modal').modal('toggle');
+
+  var Rating = Parse.Object.extend('Rating');
+  var rating = new Rating();
+
+  rating.set('cafe', CurrentPageCafe);
+  rating.set('value', value);
+  rating.set('userId', ''); // TODO: do cookie
+
+  rating.save(null, {
+      success: function(rating) {
+        if(!alert('評分成功')) {
+          window.location.reload();
+        }
+      },
+      error: function(rating, error) {
+        alert('評分失敗');
+        console.log('Failed to create new object, with error code: ' + error.message);
+      }
+  });
+
+}
+
 setupParse();
-setupLightBox();
+$(document).ready(function () {
+  setupLightBox();
+  setupRatingHandler();
+});

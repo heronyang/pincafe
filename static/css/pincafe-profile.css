@@ -44,6 +44,7 @@ h1.section-heading {
 .rating > span:hover ~ span:before {
    content: "\2605";
    position: absolute;
+   cursor: pointer;
 }
 
 .foodtype-container {
