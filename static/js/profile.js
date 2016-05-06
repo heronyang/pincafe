@@ -70,13 +70,26 @@ function pincafeProfileInit(cafeId) {
 
 function insertCafeDataToLayout(cafe) {
 
-  var name = $('#pincafe-name');
-  var alternativeName = $('#pincafe-alternative-name');
-  var phone=  $('#pincafe-phone');
-  var address = $('#pincafe-address');
+  insertName(cafe);
+  insertAlternativeName(cafe);
+  insertPhone(cafe);
+  insertAddress(cafe);
+  insertOpeningHours(cafe);
+  insertRating(cafe);
 
+}
+
+function insertName(cafe) {
+
+  var name = $('#pincafe-name');
   var nameText = cafe.get("name");
   name.text(nameText);
+
+}
+
+function insertAlternativeName(cafe) {
+
+  var alternativeName = $('#pincafe-alternative-name');
 
   var alternativeNameText = cafe.get("alternativeName");
   if(alternativeNameText !== '') {
@@ -84,18 +97,29 @@ function insertCafeDataToLayout(cafe) {
     alternativeName.show();
   }
 
+}
+
+function insertPhone(cafe) {
+
+  var phone=  $('#pincafe-phone');
+
   var phoneText = cafe.get("phone");
   phone.text(phoneText);
+
+}
+
+function insertAddress(cafe) {
+
+  var address = $('#pincafe-address');
 
   var addressText = cafe.get("address");
   address.text(addressText);
 
-  var openingHoursTypesRelation = cafe.relation("openingHoursTypes");
-  fillOpeningHoursSummary(openingHoursTypesRelation);
-
 }
 
-function fillOpeningHoursSummary(openingHoursTypesRelation) {
+function insertOpeningHours(cafe) {
+
+  var openingHoursTypesRelation = cafe.relation("openingHoursTypes");
 
   var openingHours = $('#pincafe-opening-hours');
   var openingHoursTypesQuery = openingHoursTypesRelation.query();
@@ -116,6 +140,30 @@ function fillOpeningHoursSummary(openingHoursTypesRelation) {
         alert("Error: " + error.code + " " + error.message);
       }
   });
+
+}
+
+function insertRating(cafe) {
+
+  var ratingAverageValue = cafe.get("ratingAverage");
+  var ratingCountValue = cafe.get("ratingCount");
+
+  var ratingCount = $('#pincafe-rating-count');
+  ratingCount.text(ratingCountValue);
+  console.log(ratingAverageValue, ratingCountValue);
+
+  var ratingStars = $('#pincafe-rating-stars');
+  var ratingStarsHtml = '';
+  var r = Math.round(ratingAverageValue);
+
+  var i;
+  for(i=1 ; i <= r ; i++) {
+    ratingStarsHtml += '<i class="fa fa-star"></i>';
+  }
+  for(i=r ; i<5 ; i++) {
+    ratingStarsHtml += '<i class="fa fa-star-o"></i>';
+  }
+  ratingStars.html(ratingStarsHtml);
 
 }
 
