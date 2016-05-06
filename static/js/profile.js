@@ -1,8 +1,12 @@
+var lat = 0;
+var lng = 0;
+
 function initMap() {
+
   var mapDiv = document.getElementById('map');
   var map = new google.maps.Map(mapDiv, {
 
-      center: {lat: 25.0226503, lng: 121.5310498},
+      center: {lat: lat, lng: lng},
       zoom: 17,
 
       disableDefaultUI: true,
@@ -22,7 +26,7 @@ function initMap() {
 
   });
 
-  var fakeMarker ={lat: 25.0226503, lng: 121.5310498};
+  var fakeMarker ={lat: lat, lng: lng};
   var marker = new google.maps.Marker({
       position: fakeMarker,
       map: map
@@ -80,6 +84,8 @@ function insertCafeDataToLayout(cafe) {
   insertTags(cafe);
   insertDescription(cafe);
   insertUtility(cafe);
+
+  setupMap(cafe);
 
 }
 
@@ -224,13 +230,12 @@ function insertDescription(cafe) {
 }
 
 function insertUtility(cafe) {
+
   var hasFreeWifi = cafe.get('hasFreeWifi');
   var hasPowerOutlet = cafe.get('hasPowerOutlet');
   var hasTimeLimitation = cafe.get('hasTimeLimitation');
   var isQuiet = cafe.get('isQuiet');
   var isReservationAvailable = cafe.get('isReservationAvailable');
-  console.log(hasFreeWifi, hasPowerOutlet, hasTimeLimitation, isQuiet, isReservationAvailable);
-
 
   $('#pincafe-wifi').html('<img src="/img/item_wifi' + ((hasFreeWifi) ? '' : '-x') + '.png"/>');
   $('#pincafe-power').html('<img src="/img/item_power' + ((hasPowerOutlet) ? '' : '-x') + '.png"/>');
@@ -240,6 +245,11 @@ function insertUtility(cafe) {
 
 }
 
+function setupMap(cafe) {
+  lat = parseFloat(cafe.get('latitude'));
+  lng = parseFloat(cafe.get('longitude'));
+  $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
+}
 
 setupParse();
 setupLightBox();
