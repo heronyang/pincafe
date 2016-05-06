@@ -51,7 +51,10 @@
         <div class="row">
           <div class="col-md-8 col-sm-12">
             <div class="clearfix"></div>
-            <h1 class="section-heading">窩著咖啡</h1>
+            <h1 class="section-heading">
+              <span id="pincafe-name"></span>
+              <span id="pincafe-alternative-name" class="section-heading" hidden>hello</span>
+            </h1>
             <div class="row">
               <div class="col-md-12">
                 <div class="rating-container">
@@ -252,7 +255,7 @@
             </div>
           </div>
 
-          <div class="fb-comments" data-href="https://www.google.com/" data-width="100%" data-numposts="5"></div>
+          <div class="fb-comments" data-href="<%- url %>" data-width="100%" data-numposts="20"></div>
 
         </div>
 
@@ -279,18 +282,12 @@
       <% include ../partials/footer %>
     </footer>
 
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=235876559768929";
-        fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
-
+    <% include ../partials/facebook-comment %>
     <% include ../partials/js-essentials %>
-    <script type="text/javascript" src="/js/ekko-lightbox.min.js"></script>
     <script type="text/javascript" src="/js/profile.js"></script>
+    <script type="text/javascript">
+      pincafeProfileInit("<%- cafeId %>");
+    </script>
 
   </body>
 </html>

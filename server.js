@@ -14,7 +14,8 @@ app.get('/s/:keyword', function(req, res) {
 });
 
 app.get('/p/:cafeId', function(req, res) {
-  res.render('pages/profile', {cafeId: req.params.cafeId});
+  var url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  res.render('pages/profile', {cafeId: req.params.cafeId, url: url});
 });
 
 app.get('*', function(req, res){

@@ -30,29 +30,6 @@ function initMap() {
 
 }
 
-function setupParse() {
-
-  Parse.initialize('XJFp6TdDwyF3T');
-  Parse.serverURL = 'https://pincafe-parse.herokuapp.com/';
-  var Cafe = Parse.Object.extend("Cafe");
-  var query = new Parse.Query(Cafe);
-  // query.equalTo("name", "picnic");
-  query.find({
-      success: function(cafes) {
-        console.log("success", cafes.length);
-        for(var i = 0; i < cafes.length; i ++) {
-          var cafe = cafes[i];
-          var toDisplayContent = [cafe.get("name"), cafe.get("description"), cafe.get("address")];
-          console.log(toDisplayContent);
-        }
-      },
-      error: function(object, error) {
-        console.log("fail");
-      }
-  });
-
-}
-
 function setupLightBox() {
 
   $(document).delegate('*[data-toggle="lightbox"]', 'click', function(event) {
@@ -64,5 +41,48 @@ function setupLightBox() {
 
 }
 
-setupLightBox();
+function setupParse() {
+
+  Parse.initialize('XJFp6TdDwyF3T');
+  Parse.serverURL = 'https://pincafe-parse.herokuapp.com/';
+
+}
+
+function pincafeProfileInit(cafeId) {
+
+  var Cafe = Parse.Object.extend("Cafe");
+  var query = new Parse.Query(Cafe);
+  query.equalTo("cafeId", cafeId);
+  query.find({
+      success: function(cafes) {
+        console.log("success", cafes.length);
+        for(var i = 0; i < cafes.length; i ++) {
+          var cafe = cafes[i];
+          insertCafeDataToLayout(cafe);
+        }
+      },
+      error: function(object, error) {
+        console.log("fail");
+      }
+  });
+
+}
+
+function insertCafeDataToLayout(cafe) {
+
+  var name = $('#pincafe-name');
+  var alternativeName = $('#pincafe-alternative-name');
+
+  var nameText = cafe.get("name");
+  name.text(nameText);
+
+  var alternativeNameText = cafe.get("alternativeName");
+  if(alternativeNameText !== '') {
+    alternativeName.text('(' + alternativeNameText + ')');
+    alternativeName.show();
+  }
+
+}
+
 setupParse();
+setupLightBox();
