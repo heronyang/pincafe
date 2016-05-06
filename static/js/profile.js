@@ -251,5 +251,12 @@ function setupMap(cafe) {
   $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
 }
 
+function setupShareButtons() {
+  var fbShare = $('#share-facebook');
+  fbShare.click(function() {
+    console.log( "Handler for .click() called." );
+  });
+}
+
 setupParse();
 setupLightBox();
