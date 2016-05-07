@@ -47,13 +47,6 @@ function setupLightBox() {
 
 }
 
-function setupParse() {
-
-  Parse.initialize('XJFp6TdDwyF3T');
-  Parse.serverURL = 'https://pincafe-parse.herokuapp.com/';
-
-}
-
 function pincafeProfileInit(cafeId) {
 
   var Cafe = Parse.Object.extend('Cafe');
@@ -200,16 +193,7 @@ function insertRating(cafe) {
   console.log(ratingAverageValue, ratingCountValue);
 
   var ratingStars = $('#pincafe-rating-stars');
-  var ratingStarsHtml = '';
-  var r = Math.round(ratingAverageValue);
-
-  var i;
-  for(i=1 ; i <= r ; i++) {
-    ratingStarsHtml += '<i class="fa fa-star"></i>';
-  }
-  for(i=r ; i<5 ; i++) {
-    ratingStarsHtml += '<i class="fa fa-star-o"></i>';
-  }
+  var ratingStarsHtml = generateStarHtml(ratingAverageValue);
   ratingStars.html(ratingStarsHtml);
 
 }
@@ -237,25 +221,7 @@ function insertFoodType(cafe) {
 }
 
 function insertTags(cafe) {
-
-  var tagsRelation = cafe.relation('tags');
-  var tagsQuery = tagsRelation.query();
-
-  tagsQuery.find({
-      success: function(results) {
-        var tags = $('#pincafe-tags');
-        var tagsHtml = '';
-        for(var i = 0; i < results.length; i ++) {
-          var t = results[i];
-          tagsHtml += '<li><a href="#">#' + t.get('name') + '</a></li>';
-        }
-        tags.html(tagsHtml);
-      },
-      error: function(error) {
-        console.log('Error: ' + error.code + ' ' + error.message);
-      }
-  });
-
+  insertTagsAsync(cafe, '#pincafe-tags');
 }
 
 function insertDescription(cafe) {

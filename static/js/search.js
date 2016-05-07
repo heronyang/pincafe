@@ -243,11 +243,96 @@ function setupSortingMethodListener() {
 }
 
 function updateData() {
-  console.log('updating data...');
-  console.log(filterOption.foodTypes);
+  // TODO: apply filter options
+  var Cafe = Parse.Object.extend('Cafe');
+  var query = new Parse.Query(Cafe);
+  query.descending('createAt');
+  query.find({
+      success: function(cafes) {
+        for(var i = 0; i < cafes.length; i ++) {
+          var cafe = cafes[i];
+          addCafeToResult(cafe);
+        }
+      },
+      error: function(object, error) {
+        console.log('fail');
+      }
+  });
+}
+
+function addCafeToResult(cafe) {
+
+  var name = cafe.get('name');
+  var id = cafe.id;
+  var ratingAverage = cafe.get('ratingAverage');
+  var ratingCount = cafe.get('ratingCount');
+  var ratingHtml = generateStarHtml(ratingAverage);
+
+  insertImageAsync(cafe);
+  insertTagsAsync(cafe, '#pincafe-tags-' + id);
+
+  var result = $('#pincafe-result');
+  var resultHtml = `
+                <div class="col-md-6">
+
+                  <div class="thumbnail">
+                    <img id="image-` + id +`" class="thumbnail-image" src="/img/blank.png" alt=""/>
+                    <div class="caption">
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <h3><a href="">` + name + `</a></h3>
+                            <h4>
+                            ` + ratingHtml + `
+                              <span class="rating-count">(` + ratingCount +`)</span>
+                            </h4>
+                          </div>
+                          <div class="col-md-6 right-col">
+                            <img class="icon-image" src="/img/item_wifi.png"/>
+                            <img class="icon-image" src="/img/item_power.png"/>
+                            <img class="icon-image" src="/img/item_time.png"/>
+                            <img class="icon-image" src="/img/item_quite.png"/>
+                            <img class="icon-image" src="/img/item_booking.png"/>
+                            <br />
+                            <div class="row">
+                              <div class="tag-container">
+                                <ul class="pager">
+                                <span id="pincafe-tags-` + id + `"></span>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+  `;
+  result.append(resultHtml);
+}
+
+function insertImageAsync(cafe) {
+
+  var Image = Parse.Object.extend('Image');
+  var query = new Parse.Query(Image);
+
+  query.equalTo('cafe', cafe);
+  query.find({
+      success: function(images) {
+        // TODO
+        console.log(images);
+      },
+      error: function(object, error) {
+        console.log('fail');
+      }
+  });
+
 }
 
 $(document).ready(function() {
+
+  setupParse();
 
   setupListeners();
   updateData();
