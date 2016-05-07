@@ -4,11 +4,35 @@ function fillInKeywordInSearchBox() {
   $('#search-box').val(keyword);
 }
 
-function initMap() {
-  var mapDiv = document.getElementById('map');
-  var map = new google.maps.Map(mapDiv, {
+var cafePositions = [];
+var cafeMakers = [];
 
-      center: {lat: 25.0226503, lng: 121.5310498},
+function setupMap() {
+  $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
+}
+
+function initMap() {
+
+  var geocoder =  new google.maps.Geocoder();
+  geocoder.geocode( {'address': keyword + ' 台北'}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      var lat = results[0].geometry.location.lat();
+      var lng = results[0].geometry.location.lng();
+      buildMap(lat, lng);
+      updateCafeOnMap();
+    } else {
+      console.log("fail: " + status);
+    }
+  });
+
+}
+
+function buildMap(lat, lng) {
+
+  var mapDiv = document.getElementById('map');
+  map = new google.maps.Map(mapDiv, {
+
+      center: {lat: lat, lng: lng},
       zoom: 17,
 
       disableDefaultUI: true,
@@ -28,32 +52,22 @@ function initMap() {
 
   });
 
-  var fakeMarker1 ={lat: 25.0226503, lng: 121.5310498};
-  var fakeMarker2 ={lat: 25.0246603, lng: 121.5310498};
-  var fakeMarker3 ={lat: 25.0216703, lng: 121.5300498};
-  var fakeMarker4 ={lat: 25.0246803, lng: 121.5300498};
-  var fakeMarker5 ={lat: 25.0236903, lng: 121.5310498};
+}
 
-  var marker1 = new google.maps.Marker({
-      position: fakeMarker1,
-      map: map
-  });
-  var marker2 = new google.maps.Marker({
-      position: fakeMarker2,
-      map: map
-  });
-  var marker3 = new google.maps.Marker({
-      position: fakeMarker3,
-      map: map
-  });
-  var marker4 = new google.maps.Marker({
-      position: fakeMarker4,
-      map: map
-  });
-  var marker5 = new google.maps.Marker({
-      position: fakeMarker5,
-      map: map
-  });
+function updateCafeOnMap() {
+
+  for(var i in cafePositions) {
+
+    var position = cafePositions[i];
+
+    var marker = new google.maps.Marker({
+        position: position,
+        map: map
+    });
+
+    cafeMakers.push(marker);
+
+  }
 
 }
 
@@ -310,6 +324,7 @@ function addCafeToResult(cafe) {
   `;
   result.append(resultHtml);
 
+  insertOnMap(cafe);
   insertThumbnailImageAsync(cafe, '#pincafe-image-' + id);
   insertTagsAsync(cafe, '#pincafe-tags-' + id);
   insertUtilityAsync(cafe,
@@ -322,6 +337,17 @@ function addCafeToResult(cafe) {
 
 }
 
+function insertOnMap(cafe) {
+
+  var lat = parseFloat(cafe.get('latitude'));
+  var lng = parseFloat(cafe.get('longitude'));
+
+  var position = {lat: lat, lng: lng};
+  console.log(position);
+  cafePositions.push(position);
+
+}
+
 $(document).ready(function() {
 
   setupParse();
@@ -331,5 +357,7 @@ $(document).ready(function() {
 
   fillInKeywordInSearchBox();
   setSpecificTimeModalToNowInDefault();
+
+  setupMap();
 
 });
