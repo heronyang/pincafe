@@ -4,35 +4,6 @@ function fillInKeywordInSearchBox() {
   $('#search-box').val(keyword);
 }
 
-function setSpecificTimeModalToNowInDefault() {
-
-  var now = new Date();
-  var weekday = now.getDay();
-  var startHours = now.getHours();
-  var endHours = (startHours < 23)? (startHours + 1) : (startHours - 23);
-
-  $('#specific-time-weekday').val(weekday);
-  $('#specific-time-start-hour').val(startHours);
-  $('#specific-time-end-hour').val(endHours);
-
-}
-
-$('.option-box').click(function () {
-  $(this).toggleClass('enabled');
-});
-
-$('.option-box.option-box-time').click(function () {
-  $('.option-box.option-box-time').removeClass('enabled');
-  $(this).addClass('enabled');
-});
-
-$('#specific-time-confirm').click(function() {
-  var weekday = $('#specific-time-weekday option:selected').text();
-  var startTime = $('#specific-time-start-hour option:selected').text();
-  var endTime = $('#specific-time-end-hour option:selected').text();
-  $('#specific-time-text').text(weekday + ' ' + startTime + ' ~ ' + endTime);
-});
-
 function initMap() {
   var mapDiv = document.getElementById('map');
   var map = new google.maps.Map(mapDiv, {
@@ -103,6 +74,16 @@ var FoodType = Object.freeze({
     SNACK: 3
 });
 
+var WeekDay = Object.freeze({
+    MONDAY: 0,
+    TUESDAY: 1,
+    WEDNESDAY: 2,
+    THRUSDAY: 3,
+    FRIDAY: 4,
+    SATURDAY: 5,
+    SUNDAY: 6
+});
+
 var filterOption = {
 
   hasWifi: false,
@@ -111,51 +92,140 @@ var filterOption = {
   isReservationAvailable: false,
   openOn: TimeOption.NOW,
   foodTypes: new Set([]),
+  specificTimeWeekday: WeekDay.MONDAY,
+  specificTimeStartHours: 0,
+  specificTimeEndHours: 0,
 
 };
 
 function setupListeners() {
-  setupHasWifiListener();
-  setupHasPowerListener();
-  setupHasTimeLimitationListener();
-  setupIsReservationAvailableListener();
+  setupOptionBoxes();
+  setupUtilityListeners();
+  setupOpenOnListeners();
+  setupFoodTypeListeners();
 }
 
-function setupHasWifiListener() {
-  $('#pincafe-has-wifi').click(function(event) {
+function setupOptionBoxes() {
+  $('.option-box').click(function () {
+    $(this).toggleClass('enabled');
+  });
+}
+
+function setupUtilityListeners() {
+  $('.option-box-utility').click(function(event) {
     var enabled = $(this).hasClass('enabled');
-    filterOption.hasWifi = enabled;
+    var val = $(this).data('val');
+    if(val == 'has-wifi') {
+      filterOption.hasWifi = enabled;
+    } else if (val == 'has-power') {
+      filterOption.hasPower = enabled;
+    } else if (val == 'has-time-limitation') {
+      filterOption.hasTimeLimitation = enabled;
+    } else if (val == 'is-reservation-available') {
+      filterOption.isReservationAvailable = enabled;
+    }
     updateData();
   });
 }
 
-function setupHasPowerListener() {
-  $('#pincafe-has-power').click(function(event) {
-    var enabled = $(this).hasClass('enabled');
-    filterOption.hasPower = enabled;
+function setupOpenOnListeners() {
+
+  setupOpenOnSepcificTimeListener();
+
+  $('.option-box.option-box-time').click(function () {
+    $('.option-box.option-box-time').removeClass('enabled');
+    $(this).addClass('enabled');
+    var val = $(this).data('val');
+    if(val == 'now') {
+      filterOption.openOn = TimeOption.NOW;
+      updateData();
+    } else if(val == 'specific') {
+      filterOption.openOn = TimeOption.SPECIFIC;
+    } else if(val == 'any') {
+      filterOption.openOn = TimeOption.ANY;
+      updateData();
+    }
+  });
+
+}
+
+function setupOpenOnSepcificTimeListener() {
+  $('#specific-time-confirm').click(function() {
+    saveSelectedSpecificTimeAsFilterOption();
+    showSelectedSpecificTimeOnPage();
     updateData();
   });
 }
 
-function setupHasTimeLimitationListener() {
-  $('#pincafe-has-time-limitation').click(function(event) {
-    var enabled = $(this).hasClass('enabled');
-    filterOption.hasTimeLimitation = enabled;
-    updateData();
-  });
+function saveSelectedSpecificTimeAsFilterOption() {
+
+  var weekday = $('#specific-time-weekday').val();
+  var startHours = $('#specific-time-start-hour').val();
+  var endHours = $('#specific-time-end-hour').val();
+
+  filterOption.specificTimeWeekday = parseInt(weekday);
+  filterOption.specificTimeStartHours = parseInt(startHours);
+  filterOption.specificTimeEndHours = parseInt(endHours);
+
 }
 
-function setupIsReservationAvailableListener() {
-  $('#pincafe-is-reservation-available').click(function(event) {
+function showSelectedSpecificTimeOnPage() {
+
+  var weekdayText = $('#specific-time-weekday option:selected').text();
+  var startHoursText = $('#specific-time-start-hour option:selected').text();
+  var endHoursText = $('#specific-time-end-hour option:selected').text();
+  $('#specific-time-text').text(weekdayText + ' ' + startHoursText + ' ~ ' + endHoursText);
+
+}
+
+function setSpecificTimeModalToNowInDefault() {
+
+  var now = new Date();
+  var weekday = now.getDay();
+  var startHours = now.getHours();
+  var endHours = (startHours < 23)? (startHours + 1) : (startHours - 23);
+
+  $('#specific-time-weekday').val(weekday);
+  $('#specific-time-start-hour').val(startHours);
+  $('#specific-time-end-hour').val(endHours);
+
+  filterOption.specificTimeWeekday = weekday;
+  filterOption.specificTimeStartHours = startHours;
+  filterOption.specificTimeEndHours = endHours;
+
+}
+
+function setupFoodTypeListeners() {
+  $('.option-box-foodtype').click(function(event) {
+
     var enabled = $(this).hasClass('enabled');
-    filterOption.isReservationAvailable = enabled;
+    var val = $(this).data('val');
+    var foodTypes = null;
+
+    if(val == 'brunch') {
+      foodTypes = FoodType.BRUNCH;
+    } else if (val == 'meal') {
+      foodTypes = FoodType.MEAL;
+    } else if (val == 'light-food') {
+      foodTypes = FoodType.LIGHT_FOOD;
+    } else if (val == 'snack') {
+      foodTypes = FoodType.SNACK;
+    }
+
+    if(enabled){
+      filterOption.foodTypes.add(foodTypes);
+    } else {
+      filterOption.foodTypes.delete(foodTypes);
+    }
+
     updateData();
+
   });
 }
 
 function updateData() {
   console.log('updating data...');
-  console.log(filterOption);
+  console.log(filterOption.foodTypes);
 }
 
 $(document).ready(function() {
