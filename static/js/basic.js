@@ -62,7 +62,26 @@ function insertThumbnailImageAsync(cafe, domId) {
       }
   });
 
-  return '/img/blank.png';
+}
+
+function insertUtilityAsync(cafe, domIdWifi, domIdPower, domIdTime, domIdQuite, domIdReservation) {
+
+  var hasFreeWifi = cafe.get('hasFreeWifi');
+  var hasPowerOutlet = cafe.get('hasPowerOutlet');
+  var hasTimeLimitation = cafe.get('hasTimeLimitation');
+  var isQuiet = cafe.get('isQuiet');
+  var isReservationAvailable = cafe.get('isReservationAvailable');
+
+  console.log(hasFreeWifi, hasPowerOutlet, hasTimeLimitation, isQuiet, isReservationAvailable);
+  console.log(domIdWifi, domIdPower);
+  var a = $(domIdWifi);
+  console.log(a);
+
+  $(domIdWifi).html('<img class="icon-image" src="/img/item_wifi' + ((hasFreeWifi) ? '' : '-x') + '.png"/>');
+  $(domIdPower).html('<img class="icon-image" src="/img/item_power' + ((hasPowerOutlet) ? '' : '-x') + '.png"/>');
+  $(domIdTime).html('<img class="icon-image" src="/img/item_time' + ((hasTimeLimitation) ? '' : '-x') + '.png"/>');
+  $(domIdQuite).html('<img class="icon-image" src="/img/item_quite' + ((isQuiet) ? '' : '-x') + '.png"/>');
+  $(domIdReservation).html('<img class="icon-image" src="/img/item_booking' + ((isReservationAvailable) ? '' : '-x') + '.png"/>');
 
 }
 

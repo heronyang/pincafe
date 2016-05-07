@@ -270,9 +270,6 @@ function addCafeToResult(cafe) {
 
   var url = getCafeUrl(cafe);
 
-  insertThumbnailImageAsync(cafe, '#pincafe-image-' + id);
-  insertTagsAsync(cafe, '#pincafe-tags-' + id);
-
   var result = $('#pincafe-result');
   var resultHtml = `
                 <div class="col-md-6">
@@ -290,11 +287,11 @@ function addCafeToResult(cafe) {
                             </h4>
                           </div>
                           <div class="col-md-6 right-col">
-                            <img class="icon-image" src="/img/item_wifi.png"/>
-                            <img class="icon-image" src="/img/item_power.png"/>
-                            <img class="icon-image" src="/img/item_time.png"/>
-                            <img class="icon-image" src="/img/item_quite.png"/>
-                            <img class="icon-image" src="/img/item_booking.png"/>
+                            <span id="pincafe-wifi-` + id + `"></span>
+                            <span id="pincafe-power-` + id + `"></span>
+                            <span id="pincafe-time-` + id + `"></span>
+                            <span id="pincafe-quite-` + id + `"></span>
+                            <span id="pincafe-reservation-` + id + `"></span>
                             <br />
                             <div class="row">
                               <div class="tag-container">
@@ -312,6 +309,17 @@ function addCafeToResult(cafe) {
                 </div>
   `;
   result.append(resultHtml);
+
+  insertThumbnailImageAsync(cafe, '#pincafe-image-' + id);
+  insertTagsAsync(cafe, '#pincafe-tags-' + id);
+  insertUtilityAsync(cafe,
+    '#pincafe-wifi-' + id,
+    '#pincafe-power-' + id,
+    '#pincafe-time-' + id,
+    '#pincafe-quite-' + id,
+    '#pincafe-reservation-' + id
+  );
+
 }
 
 $(document).ready(function() {

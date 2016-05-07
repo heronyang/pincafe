@@ -234,17 +234,13 @@ function insertDescription(cafe) {
 
 function insertUtility(cafe) {
 
-  var hasFreeWifi = cafe.get('hasFreeWifi');
-  var hasPowerOutlet = cafe.get('hasPowerOutlet');
-  var hasTimeLimitation = cafe.get('hasTimeLimitation');
-  var isQuiet = cafe.get('isQuiet');
-  var isReservationAvailable = cafe.get('isReservationAvailable');
-
-  $('#pincafe-wifi').html('<img src="/img/item_wifi' + ((hasFreeWifi) ? '' : '-x') + '.png"/>');
-  $('#pincafe-power').html('<img src="/img/item_power' + ((hasPowerOutlet) ? '' : '-x') + '.png"/>');
-  $('#pincafe-time').html('<img src="/img/item_time' + ((hasTimeLimitation) ? '' : '-x') + '.png"/>');
-  $('#pincafe-quite').html('<img src="/img/item_quite.' + ((isQuiet) ? '' : '-x') + 'png"/>');
-  $('#pincafe-booking').html('<img src="/img/item_booking' + ((isReservationAvailable) ? '' : '-x') + '.png"/>');
+  insertUtilityAsync(cafe,
+    '#pincafe-wifi',
+    '#pincafe-power',
+    '#pincafe-time',
+    '#pincafe-quite',
+    '#pincafe-reservation'
+  );
 
 }
 
