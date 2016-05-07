@@ -1,6 +1,8 @@
-$(document).ready(function() {
-  setSpecificTimeModalToNowInDefault();
-});
+var keyword = '';
+
+function fillInKeywordInSearchBox() {
+  $('#search-box').val(keyword);
+}
 
 function setSpecificTimeModalToNowInDefault() {
 
@@ -83,3 +85,85 @@ function initMap() {
   });
 
 }
+
+function setKeyword(k) {
+  keyword = k;
+}
+
+var TimeOption = Object.freeze({
+    NOW: 0,
+    SPECIFIC: 1,
+    ANY: 2
+});
+
+var FoodType = Object.freeze({
+    BRUNCH: 0,
+    MEAL: 1,
+    LIGHT_FOOD: 2,
+    SNACK: 3
+});
+
+var filterOption = {
+
+  hasWifi: false,
+  hasPower: false,
+  hasTimeLimitation: false,
+  isReservationAvailable: false,
+  openOn: TimeOption.NOW,
+  foodTypes: new Set([]),
+
+};
+
+function setupListeners() {
+  setupHasWifiListener();
+  setupHasPowerListener();
+  setupHasTimeLimitationListener();
+  setupIsReservationAvailableListener();
+}
+
+function setupHasWifiListener() {
+  $('#pincafe-has-wifi').click(function(event) {
+    var enabled = $(this).hasClass('enabled');
+    filterOption.hasWifi = enabled;
+    updateData();
+  });
+}
+
+function setupHasPowerListener() {
+  $('#pincafe-has-power').click(function(event) {
+    var enabled = $(this).hasClass('enabled');
+    filterOption.hasPower = enabled;
+    updateData();
+  });
+}
+
+function setupHasTimeLimitationListener() {
+  $('#pincafe-has-time-limitation').click(function(event) {
+    var enabled = $(this).hasClass('enabled');
+    filterOption.hasTimeLimitation = enabled;
+    updateData();
+  });
+}
+
+function setupIsReservationAvailableListener() {
+  $('#pincafe-is-reservation-available').click(function(event) {
+    var enabled = $(this).hasClass('enabled');
+    filterOption.isReservationAvailable = enabled;
+    updateData();
+  });
+}
+
+function updateData() {
+  console.log('updating data...');
+  console.log(filterOption);
+}
+
+$(document).ready(function() {
+
+  setupListeners();
+  updateData();
+
+  fillInKeywordInSearchBox();
+  setSpecificTimeModalToNowInDefault();
+
+});

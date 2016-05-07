@@ -10,6 +10,7 @@ body {
 
 .left-panel {
     padding-top: 15px;
+    top: 53px;
 }
 
 .left-panel hr {
@@ -126,7 +127,7 @@ select.form-control select:active
 .result-list-container {
     padding-top: 15px;
     overflow: scroll;
-    height: calc(100vh - 245px);
+    height: calc(100vh - 298px);
     padding: 0px 30px;
 }
 

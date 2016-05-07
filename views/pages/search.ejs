@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>溫州街 - PinCafe</title>
+    <title><%- keyword %> - PinCafe</title>
     <% include ../partials/head %>
     <link href="/css/search.css" rel="stylesheet"/>
 
@@ -36,7 +36,7 @@
                   <div class="row">
 
                     <div class="col-md-3">
-                      <div class="row option-box">
+                      <div id="pincafe-has-wifi" class="row option-box">
                         <div class="col-md-3">
                           <img src="/img/item_wifi.png"/>
                         </div>
@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="row option-box">
+                      <div id="pincafe-has-power" class="row option-box">
                         <div class="col-md-3">
                           <img src="/img/item_power.png"/>
                         </div>
@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="row option-box">
+                      <div id="pincafe-has-time-limitation" class="row option-box">
                         <div class="col-md-3">
                           <img src="/img/item_time.png"/>
                         </div>
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="col-md-3">
-                      <div class="row option-box">
+                      <div id="pincafe-is-reservation-available" class="row option-box">
                         <div class="col-md-3">
                           <img src="/img/item_booking.png"/>
                         </div>
@@ -614,6 +614,9 @@
     <% include ../partials/js-essentials %>
     <script src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o" async defer></script>
     <script type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+      setKeyword('<%- keyword %>');
+    </script>
 
 </body>
 </html>
