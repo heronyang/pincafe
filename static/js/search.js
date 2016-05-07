@@ -246,7 +246,7 @@ function updateData() {
   // TODO: apply filter options
   var Cafe = Parse.Object.extend('Cafe');
   var query = new Parse.Query(Cafe);
-  query.descending('createAt');
+  query.descending('createdAt');
   query.find({
       success: function(cafes) {
         for(var i = 0; i < cafes.length; i ++) {
@@ -268,7 +268,9 @@ function addCafeToResult(cafe) {
   var ratingCount = cafe.get('ratingCount');
   var ratingHtml = generateStarHtml(ratingAverage);
 
-  insertImageAsync(cafe);
+  var url = getCafeUrl(cafe);
+
+  insertThumbnailImageAsync(cafe, '#pincafe-image-' + id);
   insertTagsAsync(cafe, '#pincafe-tags-' + id);
 
   var result = $('#pincafe-result');
@@ -276,12 +278,12 @@ function addCafeToResult(cafe) {
                 <div class="col-md-6">
 
                   <div class="thumbnail">
-                    <img id="image-` + id +`" class="thumbnail-image" src="/img/blank.png" alt=""/>
+                    <img id="pincafe-image-` + id +`" class="thumbnail-image" src="/img/blank.png" alt=""/>
                     <div class="caption">
                       <div class="container-fluid">
                         <div class="row">
                           <div class="col-md-6">
-                            <h3><a href="">` + name + `</a></h3>
+                            <h3><a href="` + url +`">` + name + `</a></h3>
                             <h4>
                             ` + ratingHtml + `
                               <span class="rating-count">(` + ratingCount +`)</span>
@@ -310,24 +312,6 @@ function addCafeToResult(cafe) {
                 </div>
   `;
   result.append(resultHtml);
-}
-
-function insertImageAsync(cafe) {
-
-  var Image = Parse.Object.extend('Image');
-  var query = new Parse.Query(Image);
-
-  query.equalTo('cafe', cafe);
-  query.find({
-      success: function(images) {
-        // TODO
-        console.log(images);
-      },
-      error: function(object, error) {
-        console.log('fail');
-      }
-  });
-
 }
 
 $(document).ready(function() {
