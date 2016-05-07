@@ -74,6 +74,11 @@ var FoodType = Object.freeze({
     SNACK: 3
 });
 
+var SortingMethod = Object.freeze({
+    RATING: 0,
+    DISTANCE: 1
+});
+
 var WeekDay = Object.freeze({
     MONDAY: 0,
     TUESDAY: 1,
@@ -95,17 +100,19 @@ var filterOption = {
   specificTimeWeekday: WeekDay.MONDAY,
   specificTimeStartHours: 0,
   specificTimeEndHours: 0,
+  sortingMethod: SortingMethod.RATING
 
 };
 
 function setupListeners() {
-  setupOptionBoxes();
+  setupOptionBoxListeners();
   setupUtilityListeners();
   setupOpenOnListeners();
   setupFoodTypeListeners();
+  setupSortingMethodListener();
 }
 
-function setupOptionBoxes() {
+function setupOptionBoxListeners() {
   $('.option-box').click(function () {
     $(this).toggleClass('enabled');
   });
@@ -220,6 +227,18 @@ function setupFoodTypeListeners() {
 
     updateData();
 
+  });
+}
+
+function setupSortingMethodListener() {
+  $('#pincafe-sorting-method').change(function() {
+    var val = $('#pincafe-sorting-method').val();
+    if(val == 'rating') {
+      filterOption.sortingMethod = SortingMethod.RATING;
+    } else if(val == 'distance') {
+      filterOption.SortingMethod = SortingMethod.DISTANCE;
+    }
+    updateData();
   });
 }
 
