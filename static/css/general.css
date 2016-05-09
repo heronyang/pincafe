@@ -135,3 +135,25 @@ span.tag {
 .fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
   width: 100% !important;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    height: 24px;
+  }
+  .navbar-header {
+    display: none;
+  }
+  .navbar input, .navbar button {
+    font-size: 14px;
+    height: 24px;
+  }
+  .navbar .btn {
+    padding: 0px;
+  }
+  .navbar form {
+    width: 100%;
+  }
+  .navbar-form {
+    margin: 0px;
+  }
+}
