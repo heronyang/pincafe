@@ -124,3 +124,14 @@ span.tag {
   color: #23527c;
 }
 
+.fb-comments, .fb-comments iframe[style], .fb-comments span {
+  width: 100% !important;
+}
+
+.fb-page, .fb-page iframe[style], .fb-page span {
+  width: 100% !important;
+}
+
+.fb_iframe_widget, .fb_iframe_widget span, .fb_iframe_widget span iframe[style] {
+  width: 100% !important;
+}

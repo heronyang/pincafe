@@ -85,6 +85,42 @@ function insertUtilityAsync(cafe, domIdWifi, domIdPower, domIdTime, domIdQuite, 
 
 }
 
+function insertBlogPostsAsync(cafe, domId) {
+
+  var blogPostsRelation = cafe.relation('blogPosts');
+  var query = blogPostsRelation.query();
+
+  query.descending('createdAt');
+  query.exists('title');
+  query.exists('description');
+  query.exists('author');
+  query.exists('url');
+  query.limit(5);
+
+  query.find({
+      success: function(results) {
+        var blogPostsElement = $(domId);
+        var blogPostsHtml = '';
+        for(var i = 0; i < results.length; i ++) {
+          var t = results[i];
+
+          var title = t.get('title');
+          var description = t.get('description');
+          var url = t.get('url');
+          var author = t.get('author');
+
+          blogPostsHtml += '<div class="post"> <blockquote> <h4><a href="' + url + '">' + title + '</a></h4> <p><b class="author">' + author + '</b>' + description + '</p> </blockquote> </div>';
+        }
+        blogPostsElement.html(blogPostsHtml);
+      },
+      error: function(error) {
+        console.log('Error: ' + error.code + ' ' + error.message);
+      }
+  });
+
+}
+
+
 function getCafeUrl(cafe) {
   var cafeId = cafe.get('cafeId');
   return window.location.origin + '/p/' + cafeId;

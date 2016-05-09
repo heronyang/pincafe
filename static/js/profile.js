@@ -83,6 +83,7 @@ function insertCafeDataToLayout(cafe) {
   insertDescription(cafe);
   insertUtility(cafe);
   insertFacebookFanPage(cafe);
+  insertBlogPosts(cafe);
 
   setupMap(cafe);
 
@@ -251,9 +252,13 @@ function insertUtility(cafe) {
 
 function insertFacebookFanPage(cafe) {
   var facebookFanPageId = cafe.get('facebookFanPageID');
-  var facebookFanPageHtml = '<div class="fb-page" data-href="https://www.facebook.com/' + facebookFanPageId + '/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/' + facebookFanPageId + '/"><a href="https://www.facebook.com/' + facebookFanPageId + '/"></blockquote></div></div>';
+  var facebookFanPageHtml = '<div class="fb-page" data-href="https://www.facebook.com/' + facebookFanPageId + '/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-width="500" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/' + facebookFanPageId + '/"><a href="https://www.facebook.com/' + facebookFanPageId + '/"></blockquote></div></div>';
   var facebookFanPageElement = $('#pincafe-facebook-fan-page');
   facebookFanPageElement.html(facebookFanPageHtml);
+}
+
+function insertBlogPosts(cafe) {
+  insertBlogPostsAsync(cafe, '#pincafe-blog-posts');
 }
 
 function setupMap(cafe) {
