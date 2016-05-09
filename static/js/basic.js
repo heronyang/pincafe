@@ -33,7 +33,7 @@ function insertTagsAsync(cafe, domId) {
         var tagsHtml = '';
         for(var i = 0; i < results.length; i ++) {
           var t = results[i];
-          tagsHtml += '<li><a href="#">#' + t.get('name') + '</a></li>';
+          tagsHtml += '<span class="tag">#' + t.get('name') + '</span>';
         }
         tagsElement.html(tagsHtml);
       },

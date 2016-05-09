@@ -210,7 +210,7 @@ function insertFoodType(cafe) {
         var foodTypesHtml = '';
         for(var i = 0; i < results.length; i ++) {
           var f = results[i];
-          foodTypesHtml += '<span class="foodtype-tag">' + f.get('name') + '</span>';
+          foodTypesHtml += '<span class="foodtype-tag">#' + f.get('name') + '</span>';
         }
         foodTypes.html(foodTypesHtml);
       },
@@ -250,9 +250,8 @@ function insertUtility(cafe) {
 }
 
 function insertFacebookFanPage(cafe) {
-  var name = cafe.get('name');
   var facebookFanPageId = cafe.get('facebookFanPageID');
-  var facebookFanPageHtml = '<div class="fb-page" data-href="https://www.facebook.com/' + facebookFanPageId + '/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/' + facebookFanPageId + '/"><a href="https://www.facebook.com/' + facebookFanPageId + '/">' + name + '</blockquote></div></div>';
+  var facebookFanPageHtml = '<div class="fb-page" data-href="https://www.facebook.com/' + facebookFanPageId + '/" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/' + facebookFanPageId + '/"><a href="https://www.facebook.com/' + facebookFanPageId + '/"></blockquote></div></div>';
   var facebookFanPageElement = $('#pincafe-facebook-fan-page');
   facebookFanPageElement.html(facebookFanPageHtml);
 }
