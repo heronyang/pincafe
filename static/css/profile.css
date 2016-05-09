@@ -159,26 +159,7 @@ span.space {
 }
 
 .share-button-container {
-  height: 100px;
-  text-align: center;
-}
-
-.share-button-container span {
-  margin-top: 10px;
-  margin-bottom: 50px;
-  font-size: 30px;
-}
-
-.share-button-container span.facebook i.fa-circle {
-  color: #3b5998;
-}
-
-.share-button-container span.google-plus i.fa-circle {
-  color: #d34836;
-}
-
-.share-button-container span.email i.fa-circle {
-  color: #333;
+  margin-top: 30px;
 }
 
 footer {
