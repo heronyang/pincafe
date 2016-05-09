@@ -145,13 +145,16 @@ span.tag {
   }
   .navbar input, .navbar button {
     font-size: 14px;
-    height: 24px;
+    height: 38px;
   }
   .navbar .btn {
     padding: 0px;
   }
   .navbar form {
     width: 100%;
+    border: 0px;
+    height: 50px;
+    padding: 5px;
   }
   .navbar-form {
     margin: 0px;
