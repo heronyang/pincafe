@@ -228,8 +228,12 @@ function insertDescription(cafe) {
 
   var descriptionText = cafe.get('description');
   var description = $('#pincafe-description');
-  description.text(descriptionText);
+  description.html(replaceNewLineBreakWithHtmlBr(descriptionText));
 
+}
+
+function replaceNewLineBreakWithHtmlBr(str) {
+    return str.replace(/(?:\r\n|\r|\n)/g, '<br />');
 }
 
 function insertUtility(cafe) {
