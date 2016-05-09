@@ -12,8 +12,6 @@ html {
 .navbar {
     margin-bottom: 0px;
     background: #EFA127;
-    padding-left: 135px;
-    padding-right: 135px;
 }
 
 .navbar a {
@@ -118,10 +116,11 @@ a[href^="https://maps.google.com/maps"]{display:none !important}
     float: none;
 }
 
-span.foodtype-tag, .foodtype-icon {
-  color: #754c24;
+span.foodtype-tag {
+  color: #774922;
 }
 
 span.tag {
-  color: #337ab7;
+  color: #23527c;
 }
+

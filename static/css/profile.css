@@ -47,17 +47,13 @@ h1.section-heading {
    cursor: pointer;
 }
 
-.foodtype-container {
-  padding-left: 5px;
-}
-
-.foodtype-container span {
-  margin-right: 10px;
-}
-
 .tag-container .pager {
   text-align: left;
   margin-left: 18px;
+}
+
+span.foodtype-tag, span.tag {
+  margin-right: 10px;
 }
 
 .photo-container {
@@ -138,28 +134,19 @@ span.space {
 }
 
 .contact .row{
-  margin-top: 20px;
+  margin-top: 25px;
   margin-bottom: 20px;
 }
 
 .contact .row i.fa {
-  font-size: 45px;
+  font-size: 40px;
 }
 
-.contact .row i.fa.fa-phone {
-  color: #26750c;
-}
-
-.contact .row i.fa.fa-map-marker {
-  color: #dd5858;
-}
-
-.contact .row i.fa.fa-clock-o {
-  color: #0d50a0;
+.contact .row i.fa{
+  color: #EFA127;
 }
 
 .contact .row div:nth-child(2) {
-  margin-top: 10px;
 }
 
 .contact .row div:first-child {
@@ -195,9 +182,10 @@ span.space {
 }
 
 footer {
-  text-align: right;
   background-color: #f5f5f5;
   padding: 25px 0 15px 0;
+  color: #999;
+  text-align: center;
 }
 
 /* TODO: RWD */
