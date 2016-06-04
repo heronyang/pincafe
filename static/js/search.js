@@ -290,9 +290,19 @@ function applyFilterOnResults() {
   console.log(filterOption);
 
   for(var i in cafeList) {
+
     var cafe = cafeList[i];
-    if(filterOption.hasWifi && !cafe.get('hasFreeWifi')) {
+
+    if(
+      filterOption.hasWifi && !cafe.get('hasFreeWifi') ||
+      filterOption.hasPower && !cafe.get('hasPowerOutlet') ||
+      filterOption.hasTimeLimitation && !cafe.get('hasTimeLimitation') ||
+      filterOption.isQuiet && !cafe.get('isQuiet') ||
+      filterOption.isReservationAvailable && !cafe.get('isReservationAvailable')
+    ) {
+
       hideResultListOfCafeId(cafe.id);
+
     } else {
       showResultListOfCafeId(cafe.id);
     }
