@@ -273,7 +273,7 @@ function loadInitData() {
 
         for(var i = 0; i < cafes.length; i ++) {
           var cafe = cafes[i];
-          cafeList.push({"cafe": cafe, "show": true});
+          cafeList.push(cafe);
         }
 
         showCafeListOnLayout();
@@ -287,8 +287,27 @@ function loadInitData() {
 
 function applyFilterOnResults() {
   // TODO
-  clearResultLayout();
-  showCafeListOnLayout();
+  console.log(filterOption);
+
+  for(var i in cafeList) {
+    var cafe = cafeList[i];
+    if(filterOption.hasWifi && !cafe.get('hasFreeWifi')) {
+      hideResultListOfCafeId(cafe.id);
+    } else {
+      showResultListOfCafeId(cafe.id);
+    }
+  }
+
+}
+
+function showResultListOfCafeId(cafeId) {
+  console.log('cafe show, id = ' + cafeId);
+  $('#cafe-' + cafeId).show();
+}
+
+function hideResultListOfCafeId(cafeId) {
+  console.log('cafe hide, id = ' + cafeId);
+  $('#cafe-' + cafeId).hide();
 }
 
 function showResultIsLoading() {
@@ -303,7 +322,7 @@ function clearResultLayout() {
 
 function showCafeListOnLayout() {
   for(var i in cafeList) {
-    var cafe = cafeList[i].cafe;
+    var cafe = cafeList[i];
     addCafeToResult(cafe);
   }
 }
@@ -320,7 +339,7 @@ function addCafeToResult(cafe) {
 
   var result = $('#pincafe-result');
   var resultHtml = `
-                <div class="col-md-6">
+                <div id="cafe-` + id + `" class="col-md-6">
 
                   <div class="thumbnail">
                     <img id="pincafe-image-` + id +`" class="thumbnail-image" src="/img/blank.png" alt=""/>
@@ -377,7 +396,6 @@ function insertOnMap(cafe) {
   var lng = parseFloat(cafe.get('longitude'));
 
   var position = {lat: lat, lng: lng};
-  console.log(position);
   cafePositions.push(position);
 
 }
