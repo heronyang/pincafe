@@ -7,6 +7,8 @@ function fillInKeywordInSearchBox() {
 var cafePositions = [];
 var cafeMakers = [];
 
+var cafeList = [];
+
 function setupMap() {
   $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
 }
@@ -145,7 +147,7 @@ function setupUtilityListeners() {
     } else if (val == 'is-reservation-available') {
       filterOption.isReservationAvailable = enabled;
     }
-    updateData();
+    applyFilterOnResults();
   });
 }
 
@@ -159,12 +161,12 @@ function setupOpenOnListeners() {
     var val = $(this).data('val');
     if(val == 'now') {
       filterOption.openOn = TimeOption.NOW;
-      updateData();
+      applyFilterOnResults();
     } else if(val == 'specific') {
       filterOption.openOn = TimeOption.SPECIFIC;
     } else if(val == 'any') {
       filterOption.openOn = TimeOption.ANY;
-      updateData();
+      applyFilterOnResults();
     }
   });
 
@@ -174,7 +176,7 @@ function setupOpenOnSepcificTimeListener() {
   $('#specific-time-confirm').click(function() {
     saveSelectedSpecificTimeAsFilterOption();
     showSelectedSpecificTimeOnPage();
-    updateData();
+    applyFilterOnResults();
   });
 }
 
@@ -239,7 +241,7 @@ function setupFoodTypeListeners() {
       filterOption.foodTypes.delete(foodTypes);
     }
 
-    updateData();
+    applyFilterOnResults();
 
   });
 }
@@ -252,26 +254,58 @@ function setupSortingMethodListener() {
     } else if(val == 'distance') {
       filterOption.SortingMethod = SortingMethod.DISTANCE;
     }
-    updateData();
+    applyFilterOnResults();
   });
 }
 
-function updateData() {
+function loadInitData() {
   // TODO: apply filter options
+
+  showResultIsLoading();
+
   var Cafe = Parse.Object.extend('Cafe');
   var query = new Parse.Query(Cafe);
   query.descending('createdAt');
   query.find({
       success: function(cafes) {
+
+        clearResultLayout();
+
         for(var i = 0; i < cafes.length; i ++) {
           var cafe = cafes[i];
-          addCafeToResult(cafe);
+          cafeList.push({"cafe": cafe, "show": true});
         }
+
+        showCafeListOnLayout();
+
       },
       error: function(object, error) {
         console.log('fail');
       }
   });
+}
+
+function applyFilterOnResults() {
+  // TODO
+  clearResultLayout();
+  showCafeListOnLayout();
+}
+
+function showResultIsLoading() {
+  var result = $('#pincafe-result');
+  result.html('載入中...');
+}
+
+function clearResultLayout() {
+  var result = $('#pincafe-result');
+  result.html('');
+}
+
+function showCafeListOnLayout() {
+  for(var i in cafeList) {
+    var cafe = cafeList[i].cafe;
+    addCafeToResult(cafe);
+  }
 }
 
 function addCafeToResult(cafe) {
@@ -353,7 +387,7 @@ $(document).ready(function() {
   setupParse();
 
   setupListeners();
-  updateData();
+  loadInitData();
 
   fillInKeywordInSearchBox();
   setSpecificTimeModalToNowInDefault();
