@@ -276,6 +276,7 @@ function loadInitData() {
           cafeList.push(cafe);
         }
 
+        sortCafeListByRating();
         showCafeListOnLayout();
         getCafeFoodTypes();
 
@@ -284,6 +285,15 @@ function loadInitData() {
         console.log('fail');
       }
   });
+}
+
+function sortCafeListByRating() {
+  cafeList.sort(function(a, b) {
+    if (b.get('ratingAverage') == a.get('ratingAverage')){
+      return b.get('ratingCount') - a.get('ratingCount');
+    }
+    return b.get('ratingAverage') - a.get('ratingAverage');
+  }); 
 }
 
 function applyFilterOnResults() {
