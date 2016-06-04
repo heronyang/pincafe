@@ -223,22 +223,22 @@ function setupFoodTypeListeners() {
 
     var enabled = $(this).hasClass('enabled');
     var val = $(this).data('val');
-    var foodTypes = null;
+    var foodType = null;
 
     if(val == 'brunch') {
-      foodTypes = FoodType.BRUNCH;
+      foodType = FoodType.BRUNCH;
     } else if (val == 'meal') {
-      foodTypes = FoodType.MEAL;
+      foodType = FoodType.MEAL;
     } else if (val == 'light-food') {
-      foodTypes = FoodType.LIGHT_FOOD;
+      foodType = FoodType.LIGHT_FOOD;
     } else if (val == 'snack') {
-      foodTypes = FoodType.SNACK;
+      foodType = FoodType.SNACK;
     }
 
     if(enabled){
-      filterOption.foodTypes.add(foodTypes);
+      filterOption.foodTypes.add(foodType);
     } else {
-      filterOption.foodTypes.delete(foodTypes);
+      filterOption.foodTypes.delete(foodType);
     }
 
     applyFilterOnResults();
@@ -277,6 +277,7 @@ function loadInitData() {
         }
 
         showCafeListOnLayout();
+        getCafeFoodTypes();
 
       },
       error: function(object, error) {
@@ -286,8 +287,6 @@ function loadInitData() {
 }
 
 function applyFilterOnResults() {
-  // TODO
-  console.log(filterOption);
 
   for(var i in cafeList) {
 
@@ -303,9 +302,80 @@ function applyFilterOnResults() {
 
       hideResultListOfCafeId(cafe.id);
 
+    } else if(
+      filterOption.foodTypes.has(FoodType.BRUNCH) && !hasFoodTypeBrunch(cafe) ||
+      filterOption.foodTypes.has(FoodType.MEAL) && !hasFoodTypeMeal(cafe) ||
+      filterOption.foodTypes.has(FoodType.LIGHT_FOOD) && !hasFoodTypeLightFood(cafe) ||
+      filterOption.foodTypes.has(FoodType.SNACK) && !hasFoodTypeSnack(cafe)
+    ) {
+
+      hideResultListOfCafeId(cafe.id);
+
     } else {
       showResultListOfCafeId(cafe.id);
     }
+
+  }
+
+}
+
+var cafeFoodTypes = {};
+
+function hasFoodTypeBrunch(cafe) {
+  return hasFoodTypeGenericSearch(cafe, '早午餐');
+}
+
+function hasFoodTypeMeal(cafe) {
+  return hasFoodTypeGenericSearch(cafe, '正餐');
+}
+
+function hasFoodTypeLightFood(cafe) {
+  return hasFoodTypeGenericSearch(cafe, '輕食');
+}
+
+function hasFoodTypeSnack(cafe) {
+  return hasFoodTypeGenericSearch(cafe, '點心');
+}
+
+function hasFoodTypeGenericSearch(cafe, name) {
+  var foodType = cafeFoodTypes[cafe.id];
+  for(var i in foodType) {
+    var f = foodType[i];
+    if(f.get('name') == name) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function getCafeFoodTypes() {
+
+  for(var i in cafeList) {
+
+    (function(i) {
+
+      var cafe = cafeList[i];
+
+      var foodTypesRelation = cafe.relation('foodTypes');
+      var foodTypesQuery = foodTypesRelation.query();
+
+      foodTypesQuery.find({
+          success: function(results) {
+            var fs = [];
+            for(var j = 0; j < results.length; j ++) {
+              var f = results[j];
+              fs.push(f);
+            }
+            cafeFoodTypes[cafe.id] = fs;
+            console.log('cafe id = ' + cafe.id);
+          },
+          error: function(error) {
+            console.log('Error: ' + error.code + ' ' + error.message);
+          }
+      });
+
+    })(i);
+
   }
 
 }
