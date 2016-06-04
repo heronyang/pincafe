@@ -80,6 +80,14 @@ html {
     width: 100%;
 }
 
+.navbar div.pull-right {
+    padding-top: 8px;
+}
+
+.navbar .navbar-form .input-group>.form-control {
+    width: 80%;
+}
+
 .navbar .navbar-form .input-group .input-group-btn {
     width: 30px;
 }

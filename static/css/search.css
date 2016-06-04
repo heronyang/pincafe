@@ -107,7 +107,7 @@ select.form-control select:active
 }
 
 .sorting-container {
-    padding-bottom: 5px;
+    padding-bottom: 12px;
 }
 
 .modal .btn {
@@ -127,7 +127,7 @@ select.form-control select:active
 .result-list-container {
     padding-top: 15px;
     overflow: scroll;
-    height: calc(100vh - 298px);
+    height: calc(100vh - 305px);
     padding: 0px 30px;
 }
 
