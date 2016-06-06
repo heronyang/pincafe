@@ -9,6 +9,9 @@ var cafeMakers = [];
 
 var cafeList = [];
 
+var map;
+var isDataLoadCompleted = false;
+
 function setupMap() {
   $.getScript("https://maps.googleapis.com/maps/api/js?callback=initMap&key=AIzaSyDiw_0Dnug9zP27jioy8ezTik5aF2Kw83o");
 }
@@ -53,22 +56,64 @@ function buildMap(lat, lng) {
 
   });
 
+  google.maps.event.addListenerOnce(map, 'idle', function(){
+    updateCafeOnMap();
+  });
+
 }
 
 function updateCafeOnMap() {
 
+  if(!isDataLoadCompleted) {
+
+    setTimeout(function(){
+      updateCafeOnMap();
+    }, 100);
+
+    return;
+
+  }
+
   for(var i in cafePositions) {
 
-    var position = cafePositions[i];
+    var position = cafePositions[i].position;
+    var cafe = cafePositions[i].cafe;
 
     var marker = new google.maps.Marker({
         position: position,
-        map: map
+        map: map,
+        icon: '/img/marker.png'
     });
+
+    var url = getCafeUrl(cafe);
+    var content = '<a target="_blank" href="' + url + '">' + cafe.get('name') + '</a>';
+    var infowindow = new google.maps.InfoWindow()
+
+    google.maps.event.addListener(marker,'click', (function(marker, content, infowindow, cafe){
+      return function() {
+        infowindow.setContent(content);
+        infowindow.open(map, marker);
+        scrollResultListTo(cafe);
+      };
+    })(marker, content, infowindow, cafe));
 
     cafeMakers.push(marker);
 
   }
+
+}
+
+function scrollResultListTo(cafe) {
+
+  var container = $('.result-list-container')[0];
+  var cafeElement = $('#cafe-' + cafe.id);
+
+  container.scrollTop = 0;
+
+  var distance = cafeElement.position().top - container.offsetTop;
+  container.scrollTop = distance;
+
+  cafeElement.effect("highlight");
 
 }
 
@@ -492,7 +537,7 @@ function showCafeListOnLayout() {
     var cafe = cafeList[i];
     addCafeToResult(cafe);
   }
-  updateCafeOnMap();
+  isDataLoadCompleted = true;
 }
 
 function addCafeToResult(cafe) {
@@ -570,7 +615,7 @@ function insertOnMap(cafe) {
   console.log(cafe.get('name'), lat, lng);
 
   var position = {lat: lat, lng: lng};
-  cafePositions.push(position);
+  cafePositions.push({'cafe': cafe, 'position': position});
 
 }
 
