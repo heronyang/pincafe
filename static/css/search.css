@@ -182,3 +182,7 @@ select.form-control select:active
   position: relative;
   z-index: 999999;
 }
+
+@media (max-width: 768px) {
+    overflow-y: scroll !important;
+}

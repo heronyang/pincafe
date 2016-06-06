@@ -6,7 +6,8 @@ app.use(express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.render('pages/index');
+  // res.render('pages/index');
+  res.redirect('/s/公館%20師大');
 });
 
 app.get('/s/:keyword', function(req, res) {
