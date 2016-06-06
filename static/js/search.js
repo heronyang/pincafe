@@ -37,7 +37,7 @@ function buildMap(lat, lng) {
   map = new google.maps.Map(mapDiv, {
 
       center: {lat: lat, lng: lng},
-      zoom: 17,
+      zoom: 15,
 
       disableDefaultUI: true,
       zoomControl: true,
@@ -119,6 +119,18 @@ function scrollResultListTo(cafe) {
 
 function setKeyword(k) {
   keyword = k;
+
+  if(keyword != '公館 師大') {
+    setupWarningModal();
+    $('#warning-modal').modal('show');
+  }
+
+}
+
+function setupWarningModal() {
+  $('#go-to-ready-search-confirm').click(function() {
+    window.location.href = window.location.origin + '/s/公館%20師大';
+  });
 }
 
 var TimeOption = Object.freeze({

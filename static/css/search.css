@@ -177,3 +177,8 @@ select.form-control select:active
 .thumbnail .tag-container li a {
     padding: 2px 4px;
 }
+
+.alert {
+  position: relative;
+  z-index: 999999;
+}
