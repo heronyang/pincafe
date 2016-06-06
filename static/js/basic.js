@@ -77,11 +77,6 @@ function insertUtilityAsync(cafe, domIdWifi, domIdPower, domIdTime, domIdQuite, 
   var isQuiet = cafe.get('isQuiet');
   var isReservationAvailable = cafe.get('isReservationAvailable');
 
-  console.log(hasFreeWifi, hasPowerOutlet, hasTimeLimitation, isQuiet, isReservationAvailable);
-  console.log(domIdWifi, domIdPower);
-  var a = $(domIdWifi);
-  console.log(a);
-
   $(domIdWifi).html('<img class="icon-image" src="/img/item_wifi' + ((hasFreeWifi) ? '' : '-x') + '.png"/>');
   $(domIdPower).html('<img class="icon-image" src="/img/item_power' + ((hasPowerOutlet) ? '' : '-x') + '.png"/>');
   $(domIdTime).html('<img class="icon-image" src="/img/item_time' + ((hasTimeLimitation) ? '' : '-x') + '.png"/>');

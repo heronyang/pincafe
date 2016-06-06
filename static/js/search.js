@@ -21,7 +21,6 @@ function initMap() {
       var lat = results[0].geometry.location.lat();
       var lng = results[0].geometry.location.lng();
       buildMap(lat, lng);
-      updateCafeOnMap();
     } else {
       console.log("fail: " + status);
     }
@@ -456,7 +455,6 @@ function getOpeningHours() {
             for(var j = 0; j < results.length; j ++) {
               var o = results[j];
               os.push(o);
-              console.log(o);
             }
             cafeOpeningHoursTypes[cafe.id] = os;
           },
@@ -472,12 +470,10 @@ function getOpeningHours() {
 }
 
 function showResultListOfCafeId(cafeId) {
-  console.log('cafe show, id = ' + cafeId);
   $('#cafe-' + cafeId).show();
 }
 
 function hideResultListOfCafeId(cafeId) {
-  console.log('cafe hide, id = ' + cafeId);
   $('#cafe-' + cafeId).hide();
 }
 
@@ -496,6 +492,7 @@ function showCafeListOnLayout() {
     var cafe = cafeList[i];
     addCafeToResult(cafe);
   }
+  updateCafeOnMap();
 }
 
 function addCafeToResult(cafe) {
@@ -569,6 +566,8 @@ function insertOnMap(cafe) {
   if(!lat || !lng) {
       return;
   }
+
+  console.log(cafe.get('name'), lat, lng);
 
   var position = {lat: lat, lng: lng};
   cafePositions.push(position);
