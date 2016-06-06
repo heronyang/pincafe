@@ -279,6 +279,7 @@ function loadInitData() {
         sortCafeListByRating();
         showCafeListOnLayout();
         getCafeFoodTypes();
+        getOpeningHours();
 
       },
       error: function(object, error) {
@@ -321,12 +322,59 @@ function applyFilterOnResults() {
 
       hideResultListOfCafeId(cafe.id);
 
+    } else if(filterOption.openOn == TimeOption.NOW || filterOption.openOn == TimeOption.SPECIFIC) {
+
+      if(!isOpenAtFilterOptionTime(cafe)) {
+        hideResultListOfCafeId(cafe.id);
+      }
+
     } else {
       showResultListOfCafeId(cafe.id);
     }
 
   }
 
+}
+
+function isOpenAtFilterOptionTime(cafe) {
+
+  var weekday = filterOption.specificTimeWeekday;
+  var startHour = filterOption.specificTimeStartHours;
+  var endHour = filterOption.specificTimeEndHours;
+
+  var os = cafeOpeningHoursTypes[cafe.id];
+
+  for(var i in os) {
+
+    var o = os[i];
+    var cafeStartHour = o.get('startHour');
+    var cafeEndHour = o.get('endHour');
+
+    if(!o.get(getOpeningHoursTypeWeekdayName(weekday - 1))) {
+      continue;
+    }
+
+    if(cafeStartHour <= startHour && cafeEndHour >= endHour) {
+      return true;
+    }
+
+  }
+
+  return false;
+
+}
+
+function getOpeningHoursTypeWeekdayName(weekday) {
+  var weekdayName = [
+    'isOpenOnMonday',
+    'isOpenOnTuesday',
+    'isOpenOnWednesday',
+    'isOpenOnThursday',
+    'isOpenOnFriday',
+    'isOpenOnSaturday',
+    'isOpenOnSunday'
+    ];
+  return weekdayName[weekday];
 }
 
 var cafeFoodTypes = {};
@@ -377,7 +425,40 @@ function getCafeFoodTypes() {
               fs.push(f);
             }
             cafeFoodTypes[cafe.id] = fs;
-            console.log('cafe id = ' + cafe.id);
+          },
+          error: function(error) {
+            console.log('Error: ' + error.code + ' ' + error.message);
+          }
+      });
+
+    })(i);
+
+  }
+
+}
+
+var cafeOpeningHoursTypes = {};
+
+function getOpeningHours() {
+
+  for(var i in cafeList) {
+
+    (function(i) {
+
+      var cafe = cafeList[i];
+
+      var openingHoursTypesRelation = cafe.relation('openingHoursTypes');
+      var openingHoursTypesQuery = openingHoursTypesRelation.query();
+
+      openingHoursTypesQuery.find({
+          success: function(results) {
+            var os = [];
+            for(var j = 0; j < results.length; j ++) {
+              var o = results[j];
+              os.push(o);
+              console.log(o);
+            }
+            cafeOpeningHoursTypes[cafe.id] = os;
           },
           error: function(error) {
             console.log('Error: ' + error.code + ' ' + error.message);
@@ -484,6 +565,10 @@ function insertOnMap(cafe) {
 
   var lat = parseFloat(cafe.get('latitude'));
   var lng = parseFloat(cafe.get('longitude'));
+
+  if(!lat || !lng) {
+      return;
+  }
 
   var position = {lat: lat, lng: lng};
   cafePositions.push(position);

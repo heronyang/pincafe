@@ -47,6 +47,11 @@ function insertTagsAsync(cafe, domId) {
 function insertThumbnailImageAsync(cafe, domId) {
 
   var thumbnailImage = cafe.get('thumbnailImage');
+
+  if(!thumbnailImage) {
+      return;
+  }
+
   var thumbnailImageId = thumbnailImage.id;
 
   var ThumbnailImage = Parse.Object.extend('ThumbnailImage');
