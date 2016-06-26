@@ -7,7 +7,7 @@ app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
   // res.render('pages/index');
-  res.redirect('/s/公館%20師大');
+  res.redirect('/s/%E5%85%AC%E9%A4%A8%20%E5%B8%AB%E5%A4%A7');
 });
 
 app.get('/s/:keyword', function(req, res) {
