@@ -335,7 +335,7 @@ function loadInitData() {
           cafeList.push(cafe);
         }
 
-        sortCafeListByRating();
+        sortCafeBySpecificOrder();
         showCafeListOnLayout();
         getCafeFoodTypes();
         getOpeningHours();
@@ -347,13 +347,28 @@ function loadInitData() {
   });
 }
 
-function sortCafeListByRating() {
+function sortCafeBySpecificOrder() {
   cafeList.sort(function(a, b) {
-    if (b.get('ratingAverage') == a.get('ratingAverage')){
-      return b.get('ratingCount') - a.get('ratingCount');
+
+    if ((a.get('state') != 'COMPLETED' && b.get('state') != 'COMPLETED') ||
+        (a.get('state') == 'COMPLETED' && b.get('state') == 'COMPLETED')) {
+
+      if (b.get('ratingAverage') == a.get('ratingAverage')){
+        return b.get('ratingCount') - a.get('ratingCount');
+      }
+      return b.get('ratingAverage') - a.get('ratingAverage');
+
+    } else if (b.get('state') == 'COMPLETED') {
+
+      return 1;
+
+    } else if (a.get('state') == 'COMPLETED') {
+
+      return -1;
+
     }
-    return b.get('ratingAverage') - a.get('ratingAverage');
-  }); 
+
+  });
 }
 
 function applyFilterOnResults() {

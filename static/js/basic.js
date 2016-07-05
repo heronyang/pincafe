@@ -1,3 +1,5 @@
+var TagCountMax = 5;
+
 function setupParse() {
 
   Parse.initialize('XJFp6TdDwyF3T');
@@ -31,7 +33,8 @@ function insertTagsAsync(cafe, domId) {
       success: function(results) {
         var tagsElement = $(domId);
         var tagsHtml = '';
-        for(var i = 0; i < results.length; i ++) {
+        var count = (results.length > TagCountMax)? TagCountMax : results.length;
+        for(var i = 0; i < count; i ++) {
           var t = results[i];
           tagsHtml += '<span class="tag">#' + t.get('name') + '</span>';
         }
