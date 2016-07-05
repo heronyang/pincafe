@@ -329,6 +329,9 @@ function loadInitData() {
 
         for(var i = 0; i < cafes.length; i ++) {
           var cafe = cafes[i];
+          if (cafe.get('state') == "INCOMPLETED") {
+              continue;
+          }
           cafeList.push(cafe);
         }
 

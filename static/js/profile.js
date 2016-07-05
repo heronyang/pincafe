@@ -134,10 +134,11 @@ function insertAlternativeName(cafe) {
   var alternativeName = $('#pincafe-alternative-name');
 
   var alternativeNameText = cafe.get('alternativeName');
-  if(alternativeNameText !== '') {
-    alternativeName.text('(' + alternativeNameText + ')');
-    alternativeName.show();
+  if(alternativeNameText == undefined || alternativeNameText == '') {
+      return;
   }
+  alternativeName.text('(' + alternativeNameText + ')');
+  alternativeName.show();
 
 }
 
