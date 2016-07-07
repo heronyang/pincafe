@@ -400,6 +400,8 @@ function applyFilterOnResults() {
 
       if(!isOpenAtFilterOptionTime(cafe)) {
         hideResultListOfCafeId(cafe.id);
+      } else {
+          showResultListOfCafeId(cafe.id);
       }
 
     } else {
@@ -417,6 +419,14 @@ function isOpenAtFilterOptionTime(cafe) {
   var endHour = filterOption.specificTimeEndHours;
 
   var os = cafeOpeningHoursTypes[cafe.id];
+
+  console.log('weekday: ' + weekday + ', startHour: ' + startHour + ', endHour: ' + endHour);
+  console.log('os: ' + os);
+
+  if (!os) {
+    console.log('os is empty ');
+    return true;
+  }
 
   for(var i in os) {
 
@@ -471,6 +481,9 @@ function hasFoodTypeSnack(cafe) {
 
 function hasFoodTypeGenericSearch(cafe, name) {
   var foodType = cafeFoodTypes[cafe.id];
+  if (!foodType) {
+    return true;
+  }
   for(var i in foodType) {
     var f = foodType[i];
     if(f.get('name') == name) {
