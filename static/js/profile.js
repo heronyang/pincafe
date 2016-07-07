@@ -173,11 +173,11 @@ function insertOpeningHours(cafe) {
         for(var i = 0; i < results.length; i ++) {
           var result = results[i];
           if(i > 0) {
-            openingHoursText += '、';
+            openingHoursText += '、<br />';
           }
           openingHoursText += result.get('description');
         }
-        openingHours.text(openingHoursText);
+        openingHours.html(openingHoursText);
       },
       error: function(error) {
         console.log('Error: ' + error.code + ' ' + error.message);
